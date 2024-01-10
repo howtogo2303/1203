@@ -1,4 +1,4 @@
-name: Haoyangmao
+name: Haoyangmao2
 on:
   schedule:
     - cron: '38 1 */10 * *' # Run every day at midnight
@@ -14,7 +14,8 @@ jobs:
 
       - name: Time Counter
         run: python time.py
-          
+      - name: Time Counter2
+        run: python time.py
           
 
 
