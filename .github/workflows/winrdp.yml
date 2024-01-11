@@ -15,18 +15,14 @@ jobs:
 
       - name: Log In To AnyDesk
         run: cmd /c show.bat
+       - name: Wait for 15 minutes
+        run: sleep 1200  # 15 分钟 = 900 秒
+       - name: Wait for 15 minutes
+        run: sleep 1200  # 15 分钟 = 900 秒
       - name: Wait for 15 minutes
-        run: |
-          sleep 1200  # 15 分钟 = 900 秒
+        run: sleep 1200  # 15 分钟 = 900 秒
       - name: Wait for 15 minutes
-        run: |
-          sleep 1200  # 15 分钟 = 900 秒
-     - name: Wait for 15 minutes
-        run: |
-          sleep 1200  # 15 分钟 = 900 秒
-     - name: Wait for 15 minutes
-        run: |
-          sleep 1200  # 15 分钟 = 900 秒
+        run: sleep 1200  # 15 分钟 = 900 秒
       - name: Time Counter
         run: python time.py
       - name: Time Counter2
