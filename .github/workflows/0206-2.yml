@@ -23,11 +23,16 @@ jobs:
     - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "Uncleluo@2024" -Force)
     - name: Create Tunnel
       id: create_tunnel
+      shell: pwsh
       run: |
-        Start-Process -NoNewWindow -FilePath "./ngrok/ngrok.exe" -ArgumentList "tcp 3389"
-        Start-Sleep -s 10
-        $ngrok = Invoke-RestMethod -Method Get -Uri "http://localhost:4040/api/tunnels"
-        $public_url = $ngrok.tunnels.public_url
+        $ngrok = Start-Process -FilePath "./ngrok/ngrok.exe" -ArgumentList "tcp 3389" -PassThru
+        Start-Sleep -s 20
+        $tunnels = Invoke-RestMethod -Method Get -Uri "http://localhost:4040/api/tunnels"
+        $public_url = $tunnels.tunnels.public_url
         Write-Host "::set-output name=ngrok_url::$public_url"
+        if (-not $public_url) {
+          $ngrok.Stop()
+          throw "Failed to create ngrok tunnel."
+        }
     - name: Get the ngrok tunnel info
       run: echo "The ngrok tunnel URL is ${{ steps.create_tunnel.outputs.ngrok_url }}"
