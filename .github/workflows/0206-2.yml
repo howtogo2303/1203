@@ -1,4 +1,4 @@
-name: CI2
+name: CI2222
 
 on: [push, workflow_dispatch]
 
@@ -23,3 +23,5 @@ jobs:
     - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "Uncleluo@2024" -Force)
     - name: Create Tunnel
       run: .\ngrok\ngrok.exe tcp 3389
+    - name: Get the ngrok tunnel info
+      run: echo "The ngrok tunnel URL is ${{ steps.create_tunnel.outputs.ngrok_url }}"
