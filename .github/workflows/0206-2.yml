@@ -22,6 +22,12 @@ jobs:
     - run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
     - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "Uncleluo@2024" -Force)
     - name: Create Tunnel
-      run: .\ngrok\ngrok.exe tcp 3389
+      id: create_tunnel
+      run: |
+        Start-Process -NoNewWindow -FilePath "./ngrok/ngrok.exe" -ArgumentList "tcp 3389"
+        Start-Sleep -s 10
+        $ngrok = Invoke-RestMethod -Method Get -Uri "http://localhost:4040/api/tunnels"
+        $public_url = $ngrok.tunnels.public_url
+        Write-Host "::set-output name=ngrok_url::$public_url"
     - name: Get the ngrok tunnel info
       run: echo "The ngrok tunnel URL is ${{ steps.create_tunnel.outputs.ngrok_url }}"
