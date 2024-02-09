@@ -32,7 +32,7 @@ jobs:
       run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
 
     - name: Set local user password
-      run: Set-LocalUser -Name "zzxadmin" -Password (ConvertTo-SecureString -AsPlainText "china@2024" -Force)
+      run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "china@2024" -Force)
 
     - name: Create and maintain ngrok tunnel
       shell: pwsh
